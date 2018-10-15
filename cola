@@ -1,0 +1,61 @@
+class Pessoa:
+	def __init__(self):
+		self.nome = None
+		self.tags = None
+		self.remids = None
+
+
+
+
+
+for tag, remid in itertools.izip_longest(anunciante.tags, anunciante.re
+    ...: mid):
+    ...:     print(tag)  
+    ...:     print(remid)
+
+
+
+
+>>> 
+>>> anunciante = Pessoa()
+>>> anunciante.nome = 'Jose'
+>>> anunciante.nome
+'Jose'
+>>> anunciante.tags = ['primeira tag','segunda tag']
+>>> anunciante.remid = ['111111111111111','222222222222']
+>>> import itertools
+>>> from itertools import izip_longest
+>>> for tag, remid in itertools.izip_longest(anunciante.tags, anunciante.remid):        
+...     print(tag)      
+...     print(remid)
+... 
+primeira tag
+111111111111111
+segunda tag
+222222222222
+
+Now, backing-up a PostgreSQL database from a bash shell is pretty easy. Just invoke pg_dump like this:
+
+pg_dump -h localhost -U postgres my_database
+You’ll also want to compress your backup. You can easily save a lot of disk space by gzipping your dump file:
+
+pg_dump -h localhost -U postgres my_database | gzip > backup.gz
+
+
+===
+
+Sugest:
+
+SHA 
+
+
+VERSÃO DO SHA*
+
+
+PAGINAÇÃO
+
+FOrmatação Ficha de cadastro
+
+
+VueJS
+
