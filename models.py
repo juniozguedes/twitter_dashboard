@@ -19,9 +19,10 @@ migrate = Migrate(app, db)
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(20))
-    tweets = db.relationship('Tweets', backref='user')
-    name = db.Column(db.String(30))
+    nickname = db.Column(db.String(30))
+    password = db.Column(db.String(100))
+    tweets = db.relationship('Tweets', backref='user', lazy=True)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
 
 class Tweets(db.Model):
 
@@ -29,6 +30,8 @@ class Tweets(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tweet_owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_nickname = db.Column(db.String(30))
+    owner_username = db.Column(db.String(30))
     content = db.Column(db.Text)
     entrada = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     uniquekey = db.Column(db.Text, unique=True)
