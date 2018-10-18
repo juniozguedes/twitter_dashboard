@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{{url_for('timeline')}}">Home</a>
+<a href="{{url_for('profile', id=current_user.id)}}">Perfil</a>
+<a href="{{url_for('logout')}}">Logout</a>
+<h1>Sucesso</h1>
+<form action="{{url_for('timeline')}}" method="POST">
+	<p><input placeholder="O que você está pensando?" type="text" name="tweet" required></p>
+	<input class="container" type="submit">
+</form>
+
+
+{% for tweet in tweets %}
+	<p>{{tweet.owner_nickname}} - 
+	<a href="{{url_for('profile', id=tweet.tweet_owner)}}">@{{tweet.owner_username}}</a></p>
+	<p>{{tweet.content}}, {{tweet.entrada}}</p>
+{% endfor %}
+
+{% endblock %}
