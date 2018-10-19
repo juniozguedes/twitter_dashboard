@@ -5,9 +5,7 @@ from datetime import datetime
 from sqlalchemy.dialects.postgresql import ARRAY
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from flask_migrate import Migrate
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -23,6 +21,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     tweets = db.relationship('Tweets', backref='user', lazy=True)
     admin = db.Column(db.Boolean, nullable=False, default=False)
+    followers = db.Column(ARRAY(db.Text))
+    following = db.Column(ARRAY(db.Text))
 
 class Tweets(db.Model):
 
@@ -35,18 +35,6 @@ class Tweets(db.Model):
     content = db.Column(db.Text)
     entrada = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     uniquekey = db.Column(db.Text, unique=True)
-    
-#    def __init__(self, pid, partner, description, role, multitarifa, extra, ficha):
-#        self.pid = pid
- #       self.partner = partner
-  #      self.description = description
-   #     self.role = role
-    #    self.multitarifa = multitarifa
-     #   self.extra = extra
-      #  self.ficha = ficha
-       # self.tags = ['t_0','t_1']
-        #self.remid = ['t_0','t_1']
-        #self.uniquekey = generate_password_hash(str(random.randrange(1000)))
 
 @login_manager.user_loader
 def load_user(user_id):
