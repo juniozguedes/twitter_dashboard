@@ -14,6 +14,11 @@ login_manager.login_message = 'You need to login!'
 
 migrate = Migrate(app, db)
 
+followers = db.Table('followers',
+  db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+  db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+  )
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
@@ -21,8 +26,11 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     tweets = db.relationship('Tweets', backref='user', lazy=True)
     admin = db.Column(db.Boolean, nullable=False, default=False)
-    followers = db.Column(ARRAY(db.Text))
-    following = db.Column(ARRAY(db.Text))
+    followed = db.relationship(
+      'User', secondary=followers,
+      primaryjoin = (followers.c.follower_id == id),
+      secondaryjoin = (followers.c.followed_id == id),
+      backref = db.backref('followers', lazy = 'dynamic'), lazy='dynamic')
 
 class Tweets(db.Model):
 
