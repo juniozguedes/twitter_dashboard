@@ -44,10 +44,11 @@ class User(UserMixin, db.Model):
       return self.followed.filter(followers.c.followed_id == user.id).count()> 0
 
     def followed_posts(self):
-      return Tweets.query.join(
-          followers, (followers.c.followed_id == Tweets.tweet_owner)).filter(
-            followers.c.follower_id == self.id).order_by(
-              Tweets.id.desc())
+      followed = Tweets.query.join(
+        followers, (followers.c.followed_id == Tweets.tweet_owner)).filter(
+          followers.c.follower_id == self.id)
+      own = Tweets.query.filter_by(tweet_owner = self.id)
+      return followed.union(own).order_by(Tweets.id.desc())
 
 class Tweets(db.Model):
 
