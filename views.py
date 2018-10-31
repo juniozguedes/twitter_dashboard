@@ -48,16 +48,12 @@ def profile_timeline(id):
         tweet = Tweets.query.filter_by(id=id).first()
         db.session.delete(tweet)
         db.session.commit()
-        return redirect(url_for('profile', id=current_user.id))
+        return redirect(url_for('profile'))
 
     elif request.method == 'GET':
-        return redirect(url_for('profile', id=current_user.id))
-
-@app.route('/twitter/profile/<int:id>', methods=['POST', 'GET'])
-def profile(id):
-    user = User.query.filter_by(id=id).first()
-    user_tweets = Tweets.query.filter_by(tweet_owner=id).order_by(Tweets.id.desc()).all()
-    return render_template('profile.html', user = user, user_tweets = user_tweets)
+        user = User.query.filter_by(id=id).first()
+        user_tweets = Tweets.query.filter_by(tweet_owner=id).order_by(Tweets.id.desc()).all()
+        return render_template('profile.html', user = user, user_tweets = user_tweets)
 
 @app.route('/twitter/<int:id>', methods=['GET', 'DELETE'])
 def show(id):
