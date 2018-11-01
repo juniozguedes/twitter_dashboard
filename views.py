@@ -51,9 +51,10 @@ def profile_timeline(id):
         return redirect(url_for('profile'))
 
     elif request.method == 'GET':
+        i = User.query.filter_by(id=current_user.id).first()
         user = User.query.filter_by(id=id).first()
         user_tweets = Tweets.query.filter_by(tweet_owner=id).order_by(Tweets.id.desc()).all()
-        return render_template('profile.html', user = user, user_tweets = user_tweets)
+        return render_template('profile.html', user = user, user_tweets = user_tweets, i=i)
 
 @app.route('/twitter/<int:id>', methods=['GET', 'DELETE'])
 def show(id):
@@ -63,6 +64,26 @@ def show(id):
         db.session.delete(tweet)
         db.session.commit()
         return redirect(url_for('timeline'))
+
+@app.route('/twitter/follow/<int:id>', methods=['POST'])
+def follow(id):
+    if request.method == 'POST':
+        i = User.query.filter_by(id=current_user.id).first()
+        user = User.query.filter_by(id=id).first()
+
+        i.follow(user)
+        db.session.commit()
+        return redirect(url_for('profile_timeline', id=id))
+
+@app.route('/twitter/unfollow/<int:id>', methods=['POST'])
+def unfollow(id):
+    if request.method == 'POST':
+        i = User.query.filter_by(id=current_user.id).first()
+        user = User.query.filter_by(id=id).first()
+
+        i.unfollow(user)
+        db.session.commit()
+        return redirect(url_for('profile_timeline', id=id))
 
 @app.route('/home')
 @login_required

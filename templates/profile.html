@@ -5,7 +5,20 @@
 <a href="{{url_for('logout')}}">Logout</a>
 <h1>Sucesso</h1>
 
-<h2>Perfil</h2>
+<h2>Perfil do {{user.username}}</h2>
+<h3>{{user.nickname}}</h3>
+
+{% if i.is_following(user)  %}
+<form method="POST" action="{{url_for('unfollow', id=user.id)}}">
+	<input class="container" placeholder="unfollow" type="submit">
+</form>
+
+{% else %}
+<form method="POST" action="{{url_for('follow', id=user.id)}}">
+	<input class="container" placeholder="follow" type="submit">
+</form>
+
+{% endif %}
 <form action="{{url_for('profile_timeline', id=current_user.id)}}" method="POST">
 	<p><input placeholder="O que você está pensando?" type="text" name="tweet" required></p>
 	<input class="container" type="submit">
