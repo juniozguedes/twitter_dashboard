@@ -25,6 +25,8 @@ class User(UserMixin, db.Model):
     nickname = db.Column(db.String(30))
     password = db.Column(db.String(100))
     tweets = db.relationship('Tweets', backref='user', lazy=True)
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     followed = db.relationship(
       'User', secondary=followers,
