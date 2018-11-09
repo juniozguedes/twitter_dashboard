@@ -52,6 +52,16 @@ class User(UserMixin, db.Model):
       own = Tweets.query.filter_by(tweet_owner = self.id)
       return followed.union(own).order_by(Tweets.id.desc())
 
+    def count_followers(self):
+      u1 = User.query.filter_by(id=self.id).first()
+      followers = u1.followers.count()
+      return followers
+
+    def count_followed(self):
+      u1 = User.query.filter_by(id=self.id).first()
+      followed = u1.followed.count()
+      return followed
+
 class Tweets(db.Model):
 
     __tablename__ = "tweets"

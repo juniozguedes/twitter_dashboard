@@ -27,10 +27,12 @@ def timeline():
         return redirect(url_for('timeline'))    
     elif request.method == 'GET':
         uid = current_user.id
-        u = User.query.filter_by(id=uid).first()
-        tweets = u.followed_posts()
+        user = User.query.filter_by(id=uid).first()
+        tweets = user.followed_posts()
+        followers = user.count_followers()
+        followed = user.count_followed()
         #all_tweets = Tweets.query.filter().order_by(Tweets.id.desc()).all()        
-        return render_template('timeline.html', tweets = tweets)
+        return render_template('timeline.html', tweets = tweets, user = user, followers=followers, followed=followed)
 
 @app.route('/twitter/profile/tl/<int:id>', methods=['GET', 'POST', 'DELETE'])
 def profile_timeline(id):
