@@ -87,6 +87,18 @@ def unfollow(id):
         db.session.commit()
         return redirect(url_for('profile_timeline', id=id))
 
+@app.route('/twitter/u/following')
+def following():
+        i = User.query.filter_by(id=current_user.id).first()
+        following = i.followed.all()
+        return render_template('following.html', user = i, following = following)
+
+@app.route('/twitter/u/followers')
+def followers():
+        i = User.query.filter_by(id=current_user.id).first()
+        followers = i.followers.all()
+        return render_template('followers.html', user = i, followers = followers)
+
 @app.route('/home')
 @login_required
 def home():

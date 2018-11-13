@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{{url_for('timeline')}}">Home</a>
+<a href="{{url_for('profile_timeline', id=current_user.id)}}">Perfil</a>
+<a href="{{url_for('logout')}}">Logout</a>
+<h1>Seguidores:</h1>
+
+{% for foo in followers %}
+
+	<a href="{{url_for('profile_timeline', id=foo.id)}}">{{ foo.username }}</a>
+
+{% endfor %}
+
+{% endblock %}

@@ -19,3 +19,4 @@ class UserModelCase(unittest.TestCase):
 			self.assertTrue(u.check_password('cat'))
 
 		def test_follow(self):
+			u1 = User(username='junior'
