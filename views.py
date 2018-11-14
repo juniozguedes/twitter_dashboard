@@ -47,15 +47,17 @@ def profile_timeline(id):
         return redirect(url_for('profile', id = current_user.id))  
 
     elif request.method == 'DELETE':
-        tweet = Tweets.query.filter_by(id=id).first()
-        db.session.delete(tweet)
-        db.session.commit()
+        tweet = Tweets.query.filter_by(id=id).first() #Mandar para o controller
+        db.session.delete(tweet) #Mandar para o controller
+        db.session.commit() #Mandar para o controller
         return redirect(url_for('profile'))
 
     elif request.method == 'GET':
         i = User.query.filter_by(id=current_user.id).first()
         user = User.query.filter_by(id=id).first()
         user_tweets = Tweets.query.filter_by(tweet_owner=id).order_by(Tweets.id.desc()).all()
+        followers = user.count_followers()
+        followed = user.count_followed()
         return render_template('profile.html', user = user, user_tweets = user_tweets, i=i)
 
 @app.route('/twitter/<int:id>', methods=['GET', 'DELETE'])

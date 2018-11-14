@@ -35,7 +35,7 @@ class User(UserMixin, db.Model):
       backref = db.backref('followers', lazy = 'dynamic'), lazy='dynamic')
 
     def follow(self, user):
-      if not self.is_following(user):
+      if not self.is_following(user): #Mover para o controller
         self.followed.append(user)
 
     def unfollow(self, user):
@@ -76,4 +76,9 @@ class Tweets(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+
+  if user_id is None:
+    folllowers = query.all()
+    return followers
+
+  return User.query.get(int(user_id))
