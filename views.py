@@ -101,6 +101,18 @@ def followers():
         followers = i.followers.all()
         return render_template('followers.html', user = i, followers = followers)
 
+@app.route('/twitter/<int:id>/following')
+def following_profile():
+        u = User.query.filter_by(id=id).first()
+        following = u.followed.all()
+        return render_template('following.html', user = u, following = following)
+
+@app.route('/twitter/<int:id>/followers')
+def followers_profile():
+        u = User.query.filter_by(id=id).first()
+        followers = u.followers.all()
+        return render_template('followers.html', user = u, followers = followers)
+
 @app.route('/home')
 @login_required
 def home():

@@ -4,6 +4,8 @@
 <a href="{{url_for('profile_timeline', id=current_user.id)}}">Perfil</a>
 <a href="{{url_for('logout')}}">Logout</a>
 <h1>Sucesso</h1>
+<a href="{{url_for('followers')}}"><p>Seguidores: {{followers}}</p></a>
+<a href="{{url_for('following')}}"><p>Seguindo: {{followed}}</p></a>
 
 <h2>{{user.username}}</h2>
 <h3>{{user.nickname}}</h3>
